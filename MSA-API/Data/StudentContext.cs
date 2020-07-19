@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MSA_API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace MSA_API.Data
         // Use DbSet<Student> to query or read and 
         // write information about A Student
         public DbSet<Student> Student { get; set; }
+        public DbSet<Address> Address { get; set; }
         public static System.Collections.Specialized.NameValueCollection AppSettings { get; }
 
         // configure the database to be used by this context
@@ -32,6 +34,21 @@ namespace MSA_API.Data
             // schoolSIMSConnection is the name of the key that
             // contains the has the connection string as the value
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("schoolSIMSConnection"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Address>()
+                .HasKey(a => new { a.streetNumber, a.street, a.studentId, a.city });
+
+            modelBuilder.Entity<Address>()
+                 .HasOne<Student>()
+                 .WithMany()
+                 .HasForeignKey(a => a.studentId);
+
+            modelBuilder.Entity<Student>()
+                .HasMany<Address>()
+                .WithOne();
         }
     }
 }

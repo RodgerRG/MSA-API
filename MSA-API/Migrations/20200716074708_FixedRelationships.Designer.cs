@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSA_API.Migrations
 {
     [DbContext(typeof(StudentContext))]
-    [Migration("20200715230141_UpdatedStudentModel")]
-    partial class UpdatedStudentModel
+    [Migration("20200716074708_FixedRelationships")]
+    partial class FixedRelationships
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,42 @@ namespace MSA_API.Migrations
                 .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("MSA_API.Models.Address", b =>
+                {
+                    b.Property<int>("streetNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("street")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("studentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("city")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("postCode")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("studentId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("suburb")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("streetNumber", "street", "studentId", "city");
+
+                    b.HasIndex("studentId");
+
+                    b.HasIndex("studentId1");
+
+                    b.ToTable("Address");
+                });
 
             modelBuilder.Entity("MSA_API.Student", b =>
                 {
@@ -47,13 +83,24 @@ namespace MSA_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("timeCreated")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.HasKey("studentId");
 
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("MSA_API.Models.Address", b =>
+                {
+                    b.HasOne("MSA_API.Student", null)
+                        .WithMany()
+                        .HasForeignKey("studentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MSA_API.Student", null)
+                        .WithMany()
+                        .HasForeignKey("studentId1");
                 });
 #pragma warning restore 612, 618
         }

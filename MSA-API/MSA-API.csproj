@@ -6,6 +6,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200716062513_Initia.cs" />
+    <Compile Remove="Migrations\20200716062513_Initia.Designer.cs" />
+    <Compile Remove="Migrations\20200716063056_FixedCircularDependency.cs" />
+    <Compile Remove="Migrations\20200716063056_FixedCircularDependency.Designer.cs" />
+    <Compile Remove="Migrations\20200716063444_Test.cs" />
+    <Compile Remove="Migrations\20200716063444_Test.Designer.cs" />
+    <Compile Remove="Migrations\20200716064246_Test.cs" />
+    <Compile Remove="Migrations\20200716064246_Test.Designer.cs" />
+    <Compile Remove="Migrations\20200716070458_Test.cs" />
+    <Compile Remove="Migrations\20200716070458_Test.Designer.cs" />
+    <Compile Remove="Migrations\20200716071055_Test2.cs" />
+    <Compile Remove="Migrations\20200716071055_Test2.Designer.cs" />
+    <Compile Remove="Migrations\20200716072843_UpdatedModels.cs" />
+    <Compile Remove="Migrations\20200716072843_UpdatedModels.Designer.cs" />
+    <Compile Remove="Migrations\20200716072945_Test.cs" />
+    <Compile Remove="Migrations\20200716072945_Test.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />

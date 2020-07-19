@@ -4,14 +4,16 @@ using MSA_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MSA_API.Migrations
 {
     [DbContext(typeof(StudentContext))]
-    partial class StudentContextModelSnapshot : ModelSnapshot
+    [Migration("20200716062737_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,17 +23,14 @@ namespace MSA_API.Migrations
 
             modelBuilder.Entity("MSA_API.Models.Address", b =>
                 {
-                    b.Property<int>("streetNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("street")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("studentId")
-                        .HasColumnType("int");
+                    b.Property<int>("addressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("city")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("country")
                         .IsRequired()
@@ -40,27 +39,36 @@ namespace MSA_API.Migrations
                     b.Property<int>("postCode")
                         .HasColumnType("int");
 
-                    b.Property<int?>("studentId1")
+                    b.Property<string>("street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("streetNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("suburb")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("streetNumber", "street", "studentId", "city");
-
-                    b.HasIndex("studentId");
-
-                    b.HasIndex("studentId1");
+                    b.HasKey("addressId");
 
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("MSA_API.Student", b =>
+            modelBuilder.Entity("MSA_API.Models.Student", b =>
                 {
                     b.Property<int>("studentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("addressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("addressId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("addressId2")
+                        .HasColumnType("int");
 
                     b.Property<string>("emailAddress")
                         .HasColumnType("nvarchar(max)");
@@ -81,24 +89,30 @@ namespace MSA_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("timeCreated")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.HasKey("studentId");
 
+                    b.HasIndex("addressId");
+
+                    b.HasIndex("addressId1");
+
                     b.ToTable("Student");
                 });
 
-            modelBuilder.Entity("MSA_API.Models.Address", b =>
+            modelBuilder.Entity("MSA_API.Models.Student", b =>
                 {
-                    b.HasOne("MSA_API.Student", null)
+                    b.HasOne("MSA_API.Models.Address", "address")
                         .WithMany()
-                        .HasForeignKey("studentId")
+                        .HasForeignKey("addressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MSA_API.Student", null)
-                        .WithMany()
-                        .HasForeignKey("studentId1");
+                    b.HasOne("MSA_API.Models.Address", null)
+                        .WithMany("students")
+                        .HasForeignKey("addressId1");
                 });
 #pragma warning restore 612, 618
         }

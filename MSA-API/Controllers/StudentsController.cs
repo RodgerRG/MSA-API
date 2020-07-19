@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MSA_API;
 using MSA_API.Data;
+using MSA_API.Models;
 
 namespace MSA_API.Controllers
 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSA_API.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,8 +20,6 @@ namespace MSA_API
         public string lastName { get; set; }
         public string emailAddress { get; set; }
         public int phoneNumber { get; set; }
-        [Timestamp]
         public DateTime timeCreated { get; set; }
-
     }
 }
