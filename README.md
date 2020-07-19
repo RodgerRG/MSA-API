@@ -28,3 +28,6 @@ This endpoint is how addresses are added for a student based on a student ID. Th
 This endpoint is how addresses are changed for students. As per the guidelines for submission, this endpoint takes a student ID and an address, and changes the student's address to the given address in this PUT request body. However, due to the one to many relationship between student and address, unless an existing address is also posted it is impossible to ascertain which address should be modified. With  the wording in the guidelines pertaining to "changing THE address for a student" I have assumed that there can only be one address to change. As such, any additional addresses are removed for the student in question if this endpoint is used.
 
 ## API URLS
+### API URL
+https://databases-api.azurewebsites.net
+
